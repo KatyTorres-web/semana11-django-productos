@@ -1,0 +1,79 @@
+{% extends 'catalogo/base.html' %}
+
+{% block titulo %}
+{{ producto.nombre }} | MochiVerse
+{% endblock %}
+
+{% block contenido %}
+
+<section class="page-banner">
+    <div class="container">
+        <span class="eyebrow">MEET YOUR COSMIC FRIEND</span>
+        <h1>✨ {{ producto.nombre|title }}</h1>
+        <p>Conoce la historia de este pequeño guardián.</p>
+    </div>
+</section>
+
+<section class="section container">
+
+    <div class="detail-layout">
+
+        <div class="detail-art
+            {% if producto.categoria == 'Lunar' %}art-lunar
+            {% elif producto.categoria == 'Estelar' %}art-estelar
+            {% else %}art-galactico{% endif %}">
+
+            {% if producto.categoria == 'Lunar' %}
+                <span>🌙</span>
+            {% elif producto.categoria == 'Estelar' %}
+                <span>🐰</span>
+            {% else %}
+                <span>🌌</span>
+            {% endif %}
+
+        </div>
+
+        <div class="detail-content">
+            <span class="category-label">
+                {{ producto.categoria }}
+            </span>
+
+            <h2>{{ producto.nombre|title }}</h2>
+
+            <p>{{ producto.descripcion }}</p>
+
+            <p class="detail-price">
+                S/ {{ producto.precio|floatformat:2 }}
+            </p>
+
+            {% if producto.stock > 0 %}
+                <span class="stock-available">
+                    Disponible: {{ producto.stock }} unidades
+                </span>
+            {% else %}
+                <span class="stock-empty">
+                    Producto agotado
+                </span>
+            {% endif %}
+
+            <div class="detail-meta">
+                <p>
+                    ✦ Categoría: {{ producto.categoria }}
+                </p>
+
+                <p>
+                    ✦ Registrado:
+                    {{ producto.fecha_creacion|date:"d/m/Y" }}
+                </p>
+            </div>
+
+            <a class="btn btn-primary"
+               href="{% url 'catalogo:lista_productos' %}">
+                ← Volver al catálogo
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

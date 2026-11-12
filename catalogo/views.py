@@ -1,40 +1,8 @@
 
-from datetime import date
-
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
-
-# Datos temporales de productos
-PRODUCTOS_DEMO = [
-    {
-        'id': 1,
-        'nombre': 'Lumi Moon',
-        'descripcion': 'Un pequeño guardián de la luna.',
-        'categoria': 'Lunar',
-        'precio': 45.90,
-        'stock': 12,
-        'fecha_creacion': date(2026, 11, 1),
-    },
-    {
-        'id': 2,
-        'nombre': 'Stella Bunny',
-        'descripcion': 'Un conejito nacido entre estrellas.',
-        'categoria': 'Estelar',
-        'precio': 52.50,
-        'stock': 8,
-        'fecha_creacion': date(2026, 11, 2),
-    },
-    {
-        'id': 3,
-        'nombre': 'Mochi Nebulosa',
-        'descripcion': 'Una criatura de una galaxia pastel.',
-        'categoria': 'Galáctico',
-        'precio': 59.90,
-        'stock': 0,
-        'fecha_creacion': date(2026, 11, 3),
-    },
-]
+from .models import Producto
 
 
 # FBV: Página de inicio
@@ -42,8 +10,10 @@ def home(request):
     contexto = {
         'titulo': 'Bienvenido a MochiVerse',
         'subtitulo': 'Un universo de ternura y magia celestial',
-        'total_productos': len(PRODUCTOS_DEMO),
-        'destacados': PRODUCTOS_DEMO[:2],
+        'total_productos': Producto.objects.count(),
+        'destacados': Producto.objects.filter(
+            stock__gt=0
+        )[:2],
     }
 
     return render(request, 'catalogo/inicio.html', contexto)
@@ -51,22 +21,32 @@ def home(request):
 
 # CBV: Catálogo de productos
 class ProductoListView(ListView):
+    model = Producto
     template_name = 'catalogo/catalogo.html'
     context_object_name = 'productos'
 
     def get_queryset(self):
-        return PRODUCTOS_DEMO
+        return Producto.objects.all()
 
     def get_context_data(self, **kwargs):
         contexto = super().get_context_data(**kwargs)
+
         contexto['titulo'] = 'Colección Cósmica'
         contexto['descripcion'] = (
             'Descubre a nuestros adorables guardianes del universo.'
         )
+
         return contexto
 
 
-# FBV: Colecciones cósmicas
+# CBV: Detalle individual del producto
+class ProductoDetailView(DetailView):
+    model = Producto
+    template_name = 'catalogo/detalle.html'
+    context_object_name = 'producto'
+
+
+# FBV: Colecciones
 def colecciones(request):
     categorias = [
         {

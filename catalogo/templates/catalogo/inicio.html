@@ -96,6 +96,11 @@
                         Disponible
                     </span>
                 </div>
+
+                <a class="product-detail-link"
+                   href="{% url 'catalogo:detalle_producto' producto.pk %}">
+                    Conocer personaje ✨
+                </a>
             </div>
         </article>
         {% empty %}
