@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+      {% block titulo %} MochiVerse | Cosmic Collectibles {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'catalogo/css/styles.css' %}" />
+  </head>
+  <body>
+    <!-- Barra de navegación -->
+    <header class="site-header">
+      <nav class="navbar container" aria-label="Navegación principal">
+        <a class="brand" href="{% url 'catalogo:inicio' %}">
+          <span class="brand-icon">☾</span>
+          Mochi<span>Verse</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="{% url 'catalogo:inicio' %}"> Inicio </a>
+
+          <a href="{% url 'catalogo:lista_productos' %}"> Catálogo </a>
+
+          <a href="{% url 'catalogo:colecciones' %}"> Colecciones </a>
+
+          <a href="{% url 'catalogo:nosotros' %}"> Nuestro universo </a>
+
+          <a href="{% url 'catalogo:contacto' %}"> Contacto </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Contenido específico de cada página -->
+    <main>{% block contenido %} {% endblock %}</main>
+
+    <!-- Pie de página -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div>
+          <h3>☾ MochiVerse</h3>
+          <p>Pequeños guardianes nacidos entre estrellas.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="{% url 'catalogo:inicio' %}"> Inicio </a>
+          <a href="{% url 'catalogo:lista_productos' %}"> Catálogo </a>
+          <a href="{% url 'catalogo:contacto' %}"> Contacto </a>
+        </div>
+      </div>
+
+      <p class="copyright">
+        © {% now "Y" %} MochiVerse. Un universo lleno de magia TORRES AMBROSIO
+        KATHERINE MEDALLY - FIS
+      </p>
+    </footer>
+  </body>
+</html>
