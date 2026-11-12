@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>MochiVerse | Inicio</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'catalogo:inicio' %}">Inicio</a>
+        <a href="{% url 'catalogo:lista_productos' %}">Catálogo</a>
+        <a href="{% url 'catalogo:colecciones' %}">Colecciones</a>
+        <a href="{% url 'catalogo:nosotros' %}">Nosotros</a>
+        <a href="{% url 'catalogo:contacto' %}">Contacto</a>
+    </nav>
+
+    <main>
+        <h1>🌙 {{ titulo }}</h1>
+        <p>{{ subtitulo }}</p>
+        <p>Personajes disponibles: {{ total_productos }}</p>
+
+        <a href="{% url 'catalogo:lista_productos' %}">
+            Explorar catálogo
+        </a>
+
+        <h2>✨ Guardianes destacados</h2>
+
+        {% for producto in destacados %}
+            <article>
+                <h3>{{ producto.nombre }}</h3>
+                <p>{{ producto.descripcion }}</p>
+                <p>S/ {{ producto.precio|floatformat:2 }}</p>
+            </article>
+        {% endfor %}
+
+        <a href="{% url 'catalogo:colecciones' %}">
+            Conocer nuestras colecciones
+        </a>
+    </main>
+</body>
+</html>
